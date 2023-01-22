@@ -64,10 +64,20 @@ const CreatePost = () => {
           },
           body: JSON.stringify({ prompt: form.prompt })
         })
+        if(response.ok) {
+          const data = await response.json();
 
-        const data = await response.json();
-        setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
-      } catch (error) {
+          if(data){          
+            setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
+          } else {
+            console.log(response)
+            throw new Error("Couldn't generate the image please try again later.");
+          }
+        } else {
+          const errorMessage = await response.text();
+          throw new Error(errorMessage);
+        }
+      } catch (error: any) {
         alert(error);
       } finally {
         setGeneratingImg(false);
