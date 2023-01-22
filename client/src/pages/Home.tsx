@@ -32,7 +32,7 @@ const Home = () => {
     const fetchPosts = async () => {
       setLoading(true);
       try {
-         const response = await fetch(`http://localhost:5000/api/post`, {
+         const response = await fetch(`https://aivinci.onrender.com/api/post`, {
           method: "GET",
           headers: {
             'Content-Type': 'application/json'
