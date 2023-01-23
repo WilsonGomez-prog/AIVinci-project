@@ -12,9 +12,9 @@ const App = () => {
 
         <img src={AiVinciLogo} alt='logo' className='w-14 object-cover' />
 
-        <div className='flex overflow-hidden flex-row flex-nowrap items-center gap-2 h-14 pt-4 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-in-out'>
-          <p className='text-lg font-semibold'>Powered by</p>
-          <img src={logo} alt='logo' className='w-28 object-contain' />
+        <div className='flex overflow-hidden flex-row flex-nowrap items-center gap-1 h-14 pt-4 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-in-out'>
+          <p className='sm:text-xs lg:text-lg font-semibold'>Powered by</p>
+          <img src={logo} alt='logo' className='w-24 object-contain' />
         </div>
 
       </Link>
