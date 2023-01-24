@@ -8,11 +8,30 @@ import { Form as IForm } from '../interfaces'
 
 import { FormField, Loader } from '../components';
 
+import { designOptions, artistOptions, aspectRatioOptions } from '../utils/promptOptions'
+
+import PromptOptionsSection from '../components/PromptOptionsSection';
+
 const CreatePost = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState<IForm>({ name: '', prompt: '', photo: '' });
   const [generatingImg, setGeneratingImg] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [designFilter, setDesignFilter] = useState("");
+  const [artistFilter, setArtistFilter] = useState("");
+  const [aspectFilter, setAspectFilter] = useState("");
+
+  const handleDesignFilterChange = (filter: string) => {
+    setDesignFilter(filter);
+  }
+
+  const handleArtistFilterChange = (filter: string) => {
+    setArtistFilter(filter);
+  }
+
+  const handleAspectFilterChange = (filter: string) => {
+    setAspectFilter(filter);
+  }
 
   const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -119,22 +138,32 @@ const CreatePost = () => {
               <FormField key={key} labelName={getLabelNameForField(key)} type="text" name={key} placeholder={getPlaceholderForField(key)} value={form[key as keyof IForm]} handleChange={handleChange} isSurpriseMe={key === "prompt"} handleSurpriseMe={handleSurpriseMe} />
             ))
           }
-          <div className='relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-80 h-80 p-30 flex justify-center items-center'>
-            {
-              form.photo ? (
-                <img src={form.photo} alt={form.prompt} className='w-full h-full object-contain' />
-              ) : (
-                <img src={preview} alt="preview" className='w-9/12 h-9/12 object-contain opacity-40' />
-              )
-            }
+          <div className='w-[60rem] flex flex-row gap-2'>
+            <div className='relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-80 h-80 p-30 flex justify-center items-center'>
+              {
+                form.photo ? (
+                  <img src={form.photo} alt={form.prompt} className='w-full h-full object-contain' />
+                ) : (
+                  <img src={preview} alt="preview" className='w-9/12 h-9/12 object-contain opacity-40' />
+                )
+              }
 
-            {
-              generatingImg && (
-                <div className='absolute inset-0 z-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] rounded-lg'>
-                  <Loader />
-                </div>
-              )
-            }
+              {
+                generatingImg && (
+                  <div className='absolute inset-0 z-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] rounded-lg'>
+                    <Loader />
+                  </div>
+                )
+              }
+            </div>
+
+              <div className='flex flex-row flex-wrap w-auto gap-2'>
+                <PromptOptionsSection options={designOptions} name={"Design"} filter={""} handleFilterChange={handleDesignFilterChange} />
+                <PromptOptionsSection options={artistOptions} name={"Artist"} filter={""} handleFilterChange={handleArtistFilterChange} />
+                <PromptOptionsSection options={aspectRatioOptions} name={"Aspect"} filter={""} handleFilterChange={handleAspectFilterChange} />
+              </div>
+
+
           </div>
         </div>
         <div className='mt-5 flex gap-5'>
