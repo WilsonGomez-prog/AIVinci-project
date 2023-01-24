@@ -6,6 +6,11 @@
     font-family: 'Inter', sans-serif;
 }
 
+html, body, #root {
+    height: 100%;
+    background-color: #f9fafe;
+}
+
 @media screen and (min-width: 480px) {
     .card:nth-child(7n + 1) {
         grid-column: auto/span 2;
