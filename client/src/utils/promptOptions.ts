@@ -2,6 +2,11 @@ import { IPromptOption } from '../interfaces';
 
 const designOptions: IPromptOption[] = [
     {
+        name:'None',
+        value: '',
+        selected: false
+    },
+    {
         name:'standard',
         value: 'standard style',
         selected: false
@@ -45,6 +50,11 @@ const designOptions: IPromptOption[] = [
 
 const artistOptions: IPromptOption[] = [
     {
+        name:'None',
+        value: '',
+        selected: false
+    },
+    {
         name:'Andy Warhol',
         value: 'Andy Warhol style',
         selected: false
@@ -67,6 +77,11 @@ const artistOptions: IPromptOption[] = [
 ]
 
 const lightingOptions: IPromptOption[] = [
+    {
+        name:'None',
+        value: '',
+        selected: false
+    },
     {
         name:'volumetric',
         value: 'volumetric lightning style',

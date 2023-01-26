@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { preview } from '../assets';
 import { getRandomPrompt } from '../utils';
 
-import { Form as IForm } from '../interfaces'
+import { Form as IForm, IPromptOption } from '../interfaces'
 
 import { FormField, Loader } from '../components';
 
-import { designOptions, artistOptions, aspectRatioOptions } from '../utils/promptOptions'
+import { designOptions, artistOptions, aspectRatioOptions, lightingOptions } from '../utils/promptOptions'
 
 import PromptOptionsSection from '../components/PromptOptionsSection';
 
@@ -17,21 +17,32 @@ const CreatePost = () => {
   const [form, setForm] = useState<IForm>({ name: '', prompt: '', photo: '' });
   const [generatingImg, setGeneratingImg] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [designFilter, setDesignFilter] = useState("");
-  const [artistFilter, setArtistFilter] = useState("");
-  const [aspectFilter, setAspectFilter] = useState("");
+  const [promptFilter, setPromptFilter] = useState("");
+  const [designFilter, setDesignFilter] = useState<IPromptOption>({ name: '', value: '', selected: false });
+  const [lightingFilter, setLightingFilter] = useState<IPromptOption>({ name: '', value: '', selected: false });
+  const [artistFilter, setArtistFilter] = useState<IPromptOption>({ name: '', value: '', selected: false });
+  const [aspectFilter, setAspectFilter] = useState<IPromptOption>({ name: '', value: '', selected: false });
 
-  const handleDesignFilterChange = (filter: string) => {
+  const handleDesignFilterChange = (filter: IPromptOption) => {
     setDesignFilter(filter);
   }
+  const handleLightingFilterChange = (filter: IPromptOption) => {
+    setLightingFilter(filter);
+  }
 
-  const handleArtistFilterChange = (filter: string) => {
+  const handleArtistFilterChange = (filter: IPromptOption) => {
     setArtistFilter(filter);
   }
 
-  const handleAspectFilterChange = (filter: string) => {
+  const handleAspectFilterChange = (filter: IPromptOption) => {
     setAspectFilter(filter);
   }
+
+  useEffect(() => {
+    setPromptFilter(` ${designFilter.value} ${artistFilter.value} ${aspectFilter.value}`);
+    
+  }, [designFilter, artistFilter, aspectFilter, lightingFilter])
+
 
   const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -81,7 +92,7 @@ const CreatePost = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ prompt: form.prompt })
+          body: JSON.stringify({ prompt: form.prompt + promptFilter })
         })
         if(response.ok) {
           const data = await response.json();
@@ -138,7 +149,7 @@ const CreatePost = () => {
               <FormField key={key} labelName={getLabelNameForField(key)} type="text" name={key} placeholder={getPlaceholderForField(key)} value={form[key as keyof IForm]} handleChange={handleChange} isSurpriseMe={key === "prompt"} handleSurpriseMe={handleSurpriseMe} />
             ))
           }
-          <div className='w-[60rem] flex flex-row gap-2'>
+          <div className='w-[60rem] flex flex-row  xs:max-md:flex-col xs:max-md:items-center flex-wrap gap-2 w-3xl xs:max-md:max-w-md'>
             <div className='relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-80 h-80 p-30 flex justify-center items-center'>
               {
                 form.photo ? (
@@ -157,10 +168,11 @@ const CreatePost = () => {
               }
             </div>
 
-              <div className='flex flex-row flex-wrap w-auto gap-2'>
-                <PromptOptionsSection options={designOptions} name={"Design"} filter={""} handleFilterChange={handleDesignFilterChange} />
-                <PromptOptionsSection options={artistOptions} name={"Artist"} filter={""} handleFilterChange={handleArtistFilterChange} />
-                <PromptOptionsSection options={aspectRatioOptions} name={"Aspect"} filter={""} handleFilterChange={handleAspectFilterChange} />
+              <div className='flex flex-row flex-wrap gap-2 w-[32rem]'>
+                <PromptOptionsSection options={designOptions} name={"Design"} filter={"None"} handleFilterChange={handleDesignFilterChange} />
+                <PromptOptionsSection options={artistOptions} name={"Artist"} filter={"None"} handleFilterChange={handleArtistFilterChange} />
+                <PromptOptionsSection options={aspectRatioOptions} name={"Aspect"} filter={"1:1"} handleFilterChange={handleAspectFilterChange} />
+                <PromptOptionsSection options={lightingOptions} name={"Lighting"} filter={"None"} handleFilterChange={handleLightingFilterChange} />
               </div>
 
 
