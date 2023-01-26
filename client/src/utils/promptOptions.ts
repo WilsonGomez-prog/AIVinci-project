@@ -60,8 +60,8 @@ const artistOptions: IPromptOption[] = [
         selected: false
     },
     {
-        name:'Da Vinci anime',
-        value: 'Da Vinci anime style',
+        name:'Da Vinci',
+        value: 'Da Vinci style',
         selected: false
     },
     {
