@@ -136,23 +136,23 @@ const CreatePost = () => {
   }
 
   return (
-    <section>
+    <section className='lg:max-4k:pl-20'>
       <div>
         <h1 className='font-extrabold text-[#222328] text-[32px]'>Create</h1>
         <p className='mt-2 text-[#666e75] text-[16px] max-w[500px]'> Create imaginative and visually stunning images through DALL-E AI and share them with the community.</p>
       </div>      
 
-      <form className='mt-16 max-w-3xl max-h-52' onSubmit={(e) => { handleSubmit(e) }}>
+      <form className='mt-16 max-w-5xl max-h-52' onSubmit={(e) => { handleSubmit(e) }}>
         <div className='flex flex-col gap-5'>
           {
             Object.keys(form).filter(key => key !== "photo").map((key: string) => (
               <FormField key={key} labelName={getLabelNameForField(key)} type="text" name={key} placeholder={getPlaceholderForField(key)} value={form[key as keyof IForm]} handleChange={handleChange} isSurpriseMe={key === "prompt"} handleSurpriseMe={handleSurpriseMe} />
             ))
           }
-          <div className='flex flex-col items-center flex-wrap gap-2 max-w-md md:items-start lg:max-2xl:flex-row lg:max-2xl:w-max lg:max-2xl:max-w-7xl md:justify-start md:w-6xl lg:justify-start lg:w-6xl xl:justify-start xl:w-6xl '>
+          <div className='flex flex-row sm:max-md:flex-col items-center flex-wrap gap-2 max-w-4xl md:items-start lg:max-4k:flex-row lg:max-4k:min-w-[100rem]'>
             {/* flex flex-col lg:max-2xl:flex-row lg:max-2xl:justify-start lg:max2xl:w-3xl items-center flex-wrap gap-2 max-w-md AHORA*/} 
             {/*flex flex-row  xs:max-md:flex-col xs:max-md:items-center flex-wrap gap-2 w-3xl xs:max-md:max-w-md ANTES*/}
-            <div className='relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 md:max-2xl:w-80 h-80 p-30 flex justify-center items-center'>
+            <div className='relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 md:max-4k:w-80 h-80 p-30 flex justify-center items-center'>
               {
                 form.photo ? (
                   <img src={form.photo} alt={form.prompt} className='w-full h-full object-contain' />
@@ -170,7 +170,7 @@ const CreatePost = () => {
               }
             </div>
             
-            <div className='flex flex-row flex-wrap gap-2 xs:max-sm:justify-center w-full md:max-2xl:w-[32rem]'>
+            <div className='flex flex-row justify-start flex-wrap gap-2 xs:max-sm:justify-center w-full md:max-4k:w-[32rem]'>
               <PromptOptionsSection options={designOptions} name={"Design"} filter={"None"} handleFilterChange={handleDesignFilterChange} />
               <PromptOptionsSection options={artistOptions} name={"Artist"} filter={"None"} handleFilterChange={handleArtistFilterChange} />
               <PromptOptionsSection options={aspectRatioOptions} name={"Aspect"} filter={"1:1"} handleFilterChange={handleAspectFilterChange} />
